@@ -2,7 +2,7 @@ import json
 from sys import stdin
 
 from core.account import Account
-from core.transaction import handle_transaction
+from core.handlers import handle_transaction
 
 IS_ACCOUNT_SET=False
 
