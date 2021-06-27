@@ -23,3 +23,8 @@ def high_frequency_small_interval(account: Account, transaction: Transaction):
 
 def double_transaction(account: Account, transaction: Transaction):
     """Return double-transaction violation"""
+    account_last_three_transactions = account.transaction_history.copy()[::-1]
+    last_two_min_transactions = [x for x in account_last_three_transactions if (transaction.time - x.time).seconds <= 120]
+    for transact in last_two_min_transactions:
+        if (transact.merchant == transaction.merchant) and (transact.amount == transaction.amount):
+            return 'double-transaction'
