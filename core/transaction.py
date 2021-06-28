@@ -2,6 +2,7 @@ from datetime import datetime
 
 
 class Transaction:
+    """Transaction class to handle transactions as python classes for better management"""
 
     def __init__(self, merchant: str, amount: int, time: str):
         self.merchant = merchant
