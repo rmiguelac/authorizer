@@ -23,9 +23,9 @@ $ python authorizer.py < operations
 {"account": {"activeCard": true, "avilableLimit": 90}, "violations": []}
 {"account": {"activeCard": true, "avilableLimit": 80}, "violations": []}
 {"account": {"activeCard": true, "avilableLimit": 70}, "violations": []}
-{"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["high-frequenc-small-interval"]}
-{"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["high-frequenc-small-interval"]}
-{"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["double-transaction", "high-frequenc-small-interval"]}
+{"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["high-frequency-small-interval"]}
+{"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["high-frequency-small-interval"]}
+{"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["doubled-transaction", "high-frequency-small-interval"]}
 {"account": {"activeCard": true, "avilableLimit": 70}, "violations": ["insufficient-limit"]}
 {"account": {"activeCard": true, "avilableLimit": 20}, "violations": []}
 ```
