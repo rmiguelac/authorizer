@@ -1,7 +1,7 @@
 import json
 from sys import stdin
 
-from core.handlers import handle_account, handle_transaction
+from core.handlers import handle_account, handle_transaction, handle_account_mutation
 
 
 if __name__ == "__main__":
@@ -16,6 +16,9 @@ if __name__ == "__main__":
             output.append(response)
         elif 'transaction' in transaction_request.keys():
             response = handle_transaction(account=acc, transaction_request=transaction_request)
+            output.append(response)
+        elif 'allowList' in transaction_request.keys():
+            response = handle_account_mutation(account=acc, transaction_request=transaction_request)
             output.append(response)
     
     

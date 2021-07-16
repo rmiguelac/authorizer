@@ -15,4 +15,4 @@ def test_account_is_created_with_activeCard():
 def test_account_on_update_returns_account_already_initialized():
     acc, _ = handle_account(account_request=CREATE_ACCOUNT_REQUEST)
     _, response = handle_account(account_request=CREATE_ACCOUNT_REQUEST, account=acc)
-    assert json.loads(response) == json.loads('{"account": {"activeCard": true, "availableLimit": 100}, "violations": ["account-already-initialized"]}')
+    assert json.loads(response) == json.loads('{"account": {"activeCard": true, "availableLimit": 100, "allowListed": false}, "violations": ["account-already-initialized"]}')

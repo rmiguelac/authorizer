@@ -4,6 +4,7 @@ from core.transaction import Transaction
 from core.account import Account
 from core.violation import get_violations
 
+
 def handle_account(account_request: dict, account: Account = None):
     """ Takes an account_request and handles its creation or violation is raised"""
 
@@ -11,7 +12,8 @@ def handle_account(account_request: dict, account: Account = None):
         response = json.dumps({
                     'account': {
                         'activeCard': account.active_card,
-                        'availableLimit': account.available_limit
+                        'availableLimit': account.available_limit,
+                        'allowListed': account.allow_listed
                     },
                     'violations': ['account-already-initialized']
                 })
@@ -21,7 +23,7 @@ def handle_account(account_request: dict, account: Account = None):
             available_limit=account_request['account']['availableLimit'],
             active_card=account_request['account']['activeCard']
         )
-        response = json.dumps({'account': {'activeCard': acc.active_card, 'availableLimit': acc.available_limit}, 'violations': []})
+        response = json.dumps({'account': {'activeCard': acc.active_card, 'availableLimit': acc.available_limit, 'allowListed': acc.allow_listed}, 'violations': []})
 
     return acc, response
 
@@ -43,10 +45,30 @@ def handle_transaction(account: Account, transaction_request: dict):
     response = json.dumps({
         'account': {
             'activeCard': account.active_card,
-            'availableLimit': account.debit(transaction.amount) if not violations else account.available_limit
+            'availableLimit': account.debit(transaction.amount) if not violations else account.available_limit,
+            'allowListed': account.allow_listed
             },
         'violations': violations
         }
     )
     account.transaction_history.append(transaction)
     return response
+
+def handle_account_mutation(account: Account, transaction_request):
+    """ Handles the account mutation as to allow only 2 violations to be checked
+
+    1. The transaction amount should not be above limit
+    2. No transaction should be approved when the card is blocked
+
+    example request: {"allowList": {"active": true}}
+    """
+    
+    account.set_allow_listed(transaction_request['allowList']['active'])
+    response = json.dumps({
+        'account': {
+            'activeCard': account.active_card,
+            'availableLimit': account.available_limit,
+            'allowListed': account.allow_listed
+        },
+        'violations': []})
+    return response 
